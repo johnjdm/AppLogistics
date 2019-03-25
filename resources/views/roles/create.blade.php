@@ -2,20 +2,23 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Roles</div>
-
-                <div class="panel-body">
-                    {{ Form::open(['route' => 'roles.store']) }}
-
-                        @include('roles.partials.form')
-
-                    {{ Form::close() }}
-                </div>
-            </div>
-        </div>
+  <div class="card">
+    <div class="card-header center">
+      <h4 class="card-title">Ingresa los Datos</h4>
     </div>
-</div>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="box-header">
+            {{ Form::open(['route' => 'roles.store']) }}
+            <div class="card-body">
+              @include('roles.partials.form')
+            </div>
+             {{ Form::close() }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><br>
 @endsection

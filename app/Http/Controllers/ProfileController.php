@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,24 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+      //Aqui adquiere el ID que se encuentra Logueado
+      $userId = \Auth::user()->id;
+      //Consulta a la Database con relacion al ID en la Table users.
+      $user = \DB::table('users')->where( \DB::raw('id'), '=', $userId)->get();
+      //Aquí recorre los datos del Usuario para guardarlos en las variables y enviarlos a la vista.
+      foreach ($user as $rows) {
+               $dataChargen = [
+               'full_name_user'   => $rows->name,
+               'email_user'       => $rows->email
+               ];
+            }
+
+      $dataUser = [
+                "name"   => $dataChargen['full_name_user'],
+                "email"  => $dataChargen['email_user']
+             ];
+
+      return view('profile.index', compact('dataUser'));
     }
 
     /**
@@ -57,6 +75,22 @@ class ProfileController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function updateUser() {
+
+      $userId = \Auth::user()->id;
+      $user = User::find($userId);
+
+      if(isset($_GET['nombre'])) {
+        $user->name = $_GET['nombre'];
+      }
+
+      //if(isset($_GET['clave'])) {
+      //  $user->password = Hash::make($_GET['clave']);
+      //}
+      $user->update();
+      echo json_encode(array("status"=>"OK"));
     }
 
     /**

@@ -8,30 +8,35 @@
 </div>
 <div class="form-group">
 	{{ Form::label('description', 'Descripción') }}
-	{{ Form::textarea('description', null, ['class' => 'form-control']) }}
+	{{ Form::textarea('description', null, ['id' => 'textarea1', 'class' => 'materialize-textarea']) }}
 </div>
 <hr>
-<h3>Permiso especial</h3>
+<h5>Permiso especial</h5>
 <div class="form-group">
- 	<label>{{ Form::radio('special', 'all-access') }} Acceso total</label>
- 	<label>{{ Form::radio('special', 'no-access') }} Ningún acceso</label>
+ 	<label>{{ Form::radio('special', 'all-access', ['class' => 'with-gap', 'name' => 'group1', 'type' => 'radio']) }} <span>Acceso Total</span></label>
+ 	<label>{{ Form::radio('special', 'no-access', ['class' => 'with-gap', 'name' => 'group1', 'type' => 'radio']) }} <span>Ningún Acceso</span></label>
+	<label>{{ Form::radio('special', '', ['class' => 'with-gap', 'name' => 'group1', 'type' => 'radio']) }} <span>Ninguno</span></label>
 </div>
 <hr>
-<h3>Lista de permisos</h3>
+<h5>Lista de permisos</h5>
+<br>
 <div class="form-group">
 	<ul class="list-unstyled">
 		@foreach($permissions as $permission)
-	    <li>
-	        <label>
-	        {{ Form::checkbox('permissions[]', $permission->id, null) }}
-					{{ $permission->name }}
-	        <em>({{ $permission->description }})</em>
-	        </label>
-	    </li>
-	    @endforeach
-    </ul>
-</div>
+		<li>
+			<label>
+			{{ Form::checkbox('permissions[]', $permission->id, null, ['type' => 'checked', 'class' => 'filled-in']) }}
+			<span>
+			{{ $permission->name }}
+	    	<em>({{ $permission->description }})</em>
+			</span>
+	    </label>
+		</li>
+		@endforeach
+	</ul>
+</div><br>
 <div class="form-group">
 	{{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-primary']) }}
-	<a href="{{ route('roles.index') }}" class="btn btn-outline-secondary"></i>Regresar</a>
+	<a href="{{ route('roles.index') }}" class="waves-effect waves-light btn-small"><i class="material-icons right">reply</i>Regresar</a>
 </div>
+@include('partials.alert.info')
