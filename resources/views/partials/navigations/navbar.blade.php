@@ -29,7 +29,7 @@
                 @endcan
                 @can ('profilesEmpl.index')
                   <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('usersEmpl.index') }}">Perfiles Empleados<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ route('profilesEmpl.index') }}">Perfiles Empleados<span class="sr-only">(current)</span></a>
                   </li>
                 @endcan
               @endauth

@@ -42,7 +42,7 @@ class PermissionsTableSeeder extends Seeder
         'description'     => 'Editar Cualquier Dato de un Rol del Sistema',
       ]);
       Permission::create([
-        'name'            => 'Eliminar Usuario',
+        'name'            => 'Eliminar Rol',
         'slug'            => 'roles.destroy',
         'description'     => 'Elimina Cualquier Rol del Sistema',
       ]);
