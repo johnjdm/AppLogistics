@@ -30,9 +30,14 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('users.show', compact('user'));
-    }
+        $role = \DB::table('role_user')
+                      ->join('roles','role_user.role_id','=','roles.id')
+                      ->select('name')
+                      ->where( \DB::raw('user_id'), '=', $id)
+                      ->get();
 
+        return view('users.show', compact('user', 'role'));
+    }
     /**
      * Show the form for editing the specified resource.
      *

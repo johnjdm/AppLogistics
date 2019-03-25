@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\RolStoreRequest;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
 
@@ -38,14 +39,22 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RolStoreRequest $request)
     {
-        $role = Role::create($request->all());
+        $name = request()->input('name');
 
-        $role->permissions()->sync($request->get('permissions'));
+        $role = \DB::table('roles')->select('name')->where( \DB::raw('name'), '=', $name)->get();
 
-        return redirect()->route('roles.edit', $role->id)
-            ->with('info', 'Rol guardado con éxito');
+        if(count($role) == 0) {
+          $role = Role::create($request->all());
+
+          $role->permissions()->sync($request->get('permissions'));
+
+          return redirect()->route('roles.edit', $role->id)
+              ->with('info', 'Rol guardado con éxito');
+        } else {
+          return back()->with('warning', 'El nombre del Rol ya se encuentra registrado');
+        }
     }
 
     /**
@@ -83,17 +92,29 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
         $role = Role::find($id);
-        $role->update($request->all());
+        //Se captura el Nombre del Rol en la variable $role_name correspondiente al Id
+        $role_name = $role->name;
 
-        $role->permissions()->sync($request->get('permissions'));
+        //Nombre del Rol que se va Actualizar
+        $name = request()->input('name');
+        //Se consulta si se encuentra en la Base de Datos
+        $rol = \DB::table('roles')->select('name')->where( \DB::raw('name'), '=', $name)->get();
 
-        return redirect()->route('roles.edit', $role->id)
-            ->with('info', 'Rol guardado con éxito');
+        if(count($rol) == 0 | $role_name == $name) {
+          $role->update($request->all());
+
+          $role->permissions()->sync($request->get('permissions'));
+
+          return redirect()->route('roles.edit', $role->id)
+            ->with('info', 'El Rol fue actualizado con éxito');
+        } else {
+          return back()->with('warning', 'El nombre del Rol ya existe.');
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -104,7 +125,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id)->delete();
 
-        return back()->with('info', 'Eliminado correctamente');
+        return back()->with('info', 'Eliminado correctamente el Rol');
     }
     public function getRol($id)
     {

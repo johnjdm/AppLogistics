@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<br>
 <div class="container">
+  <div class="card">
+    <div class="card-header center">
+      <h4 class="card-title">Lista de Usuarios</h4>
+    </div><br>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    Usuarios
-                </div>
-
                 <div class="panel-body">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -26,7 +27,7 @@
                                 @can('users.show')
                                 <td width="10px">
                                     <a href="{{ route('users.show', $user->id) }}"
-                                    class="btn btn-sm btn-default">
+                                    class="btn btn-sm btn-info">
                                         ver
                                     </a>
                                 </td>
@@ -34,7 +35,7 @@
                                 @can('users.edit')
                                 <td width="10px">
                                     <a href="{{ route('users.edit', $user->id) }}"
-                                    class="btn btn-sm btn-default">
+                                    class="btn btn-sm btn-success">
                                         editar
                                     </a>
                                 </td>
@@ -58,5 +59,6 @@
             </div>
         </div>
     </div>
+  </div>
 </div>
 @endsection
