@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\profileEmplStoreRequest;
 use App\User;
 use App\profileEmpl;
 
@@ -15,9 +16,9 @@ class UserEmplController extends Controller
      */
     public function index()
     {
-        //$profilesEmpl = profileEmpl::paginate();
-        return view('profilesEmpl.index');
-        //return view('profilesEmpl.index', compact('profilesEmpl'));
+        $profilesEmpl = profileEmpl::paginate(15);
+
+        return view('profilesEmpl.index', compact('profilesEmpl'));
     }
 
     /**
@@ -38,9 +39,13 @@ class UserEmplController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(profileEmplStoreRequest $request)
     {
-        //
+        //Captura todos los Datos con Request y crea el Perfil
+        $profileEmpl = profileEmpl::create($request->all());
+
+        return redirect()->route('profilesEmpl.index', $profileEmpl->id)
+            ->with('info', 'Usuario Empleado guardado con éxito');
     }
 
     /**

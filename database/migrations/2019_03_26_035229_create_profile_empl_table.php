@@ -30,11 +30,11 @@ class CreateProfileEmplTable extends Migration
             $table->date('fecha_ingreso');
             $table->string('numero_empleado', 40)->nullable()->unique();
             $table->string('cargo');
-            $table->string('jefe', 40)->nullable()->unique();
+            $table->string('jefe');
             $table->string('zona');
             $table->string('municipio');
             $table->string('departamento');
-            $table->string('ventas2019');      
+            $table->string('ventas2019');
             $table->string('imagen', 128)->nullable();
             $table->string('cell_phone');
             $table->timestamps();
