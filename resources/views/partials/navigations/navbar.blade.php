@@ -32,6 +32,11 @@
                     <a class="nav-link" href="{{ route('profilesEmpl.index') }}">Perfiles Empleados<span class="sr-only">(current)</span></a>
                   </li>
                 @endcan
+                @can ('profileSales.index')
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profileSales.index') }}">Perfil Ventas<span class="sr-only">(current)</span></a>
+                  </li>
+                @endcan
               @endauth
             </ul>
 

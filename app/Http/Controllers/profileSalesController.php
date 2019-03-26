@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\profileEmpl;
+use App\profileSale;
 
-class UserEmplController extends Controller
+use Caffeinated\Shinobi\Models\Role;
+
+class profileSalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,10 @@ class UserEmplController extends Controller
      */
     public function index()
     {
-        //$profilesEmpl = profileEmpl::paginate();
-        return view('profilesEmpl.index');
-        //return view('profilesEmpl.index', compact('profilesEmpl'));
+        //
+        $profileSales = profileSale::paginate();
+
+        return view('profileSales.index', compact('profileSales'));
     }
 
     /**
@@ -27,9 +29,7 @@ class UserEmplController extends Controller
      */
     public function create()
     {
-        $users   = User::orderBy('email', 'ASC')->pluck('email', 'id');
-
-        return view('profilesEmpl.create', compact('users'));
+        //
     }
 
     /**

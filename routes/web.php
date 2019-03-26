@@ -94,4 +94,8 @@ Route::middleware(['auth'])->group(function () {
   Route::get('profilesEmpl/{role}/edit', 'UserEmplController@edit')->name('profilesEmpl.edit')
     ->middleware('permission:profilesEmpl.edit');
 
+  //Perfil de los Usuarios Empleados con relacion al Peerfil de Ventas
+  Route::get('profileSales', 'profileSalesController@index')->name('profileSales.index')
+    ->middleware('permission:profileSales.index');
+
 });

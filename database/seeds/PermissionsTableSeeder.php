@@ -96,5 +96,11 @@ class PermissionsTableSeeder extends Seeder
         'description'     => 'Elimina Cualquier Perfil del Sistema',
       ]);
 
+      //Perfiles de los Usuarios Empleados con relacion a las Ventas
+      Permission::create([
+        'name'            => 'Navegar Perfiles Ventas de los Empleados',
+        'slug'            => 'profileSales.index',
+        'description'     => 'Lista y Navega Todos los Perfiles de las Ventas',
+      ]);
     }
 }
