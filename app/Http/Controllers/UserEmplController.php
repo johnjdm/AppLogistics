@@ -56,7 +56,9 @@ class UserEmplController extends Controller
      */
     public function show($id)
     {
-        //
+        $profileEmpl = profileEmpl::find($id);
+
+        return view('profilesEmpl.show', compact('profileEmpl'));
     }
 
     /**
@@ -67,7 +69,10 @@ class UserEmplController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Aaui captura todos los Datos con relacion al ID
+        $profileEmpl = profileEmpl::find($id);
+
+        return view('profilesEmpl.edit', compact('profileEmpl'));
     }
 
     /**
@@ -79,7 +84,11 @@ class UserEmplController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $profileEmpl = profileEmpl::find($id);
+        $profileEmpl->update($request->all());
+
+        return redirect()->route('profilesEmpl.edit', $profileEmpl->id)
+            ->with('info', 'El Perfil del usuario se actualizado con éxito');
     }
 
     /**
@@ -90,6 +99,9 @@ class UserEmplController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Aaui elimina el Usuario Empleado con relacion al ID enviado desde el Boton
+        $profileEmpl = profileEmpl::find($id)->delete();
+
+        return back()->with('info', 'Eliminado correctamente el Perfil del Empleado');
     }
 }

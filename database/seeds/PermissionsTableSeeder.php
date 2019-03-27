@@ -102,5 +102,11 @@ class PermissionsTableSeeder extends Seeder
         'slug'            => 'profileSales.index',
         'description'     => 'Lista y Navega Todos los Perfiles de las Ventas',
       ]);
+      Permission::create([
+        'name'            => 'Ver Detalle del Perfil Empleado',
+        'slug'            => 'profileSales.show',
+        'description'     => 'Ver en Detalle Cada Perfil Empleado del Sistema',
+      ]);
+
     }
 }

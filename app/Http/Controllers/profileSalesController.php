@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\profileSale;
-
+use App\profileEmpl;
+use App\User;
 use Caffeinated\Shinobi\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class profileSalesController extends Controller
 {
@@ -16,10 +17,22 @@ class profileSalesController extends Controller
      */
     public function index()
     {
-        //
-        $profileSales = profileSale::paginate();
+        //Aqui adquiere el ID que se encuentra Logueado
+        $userId = \Auth::user()->id;
+        //Consulta a la Database con relacion al ID en la Table profile_empl.
+        $profileEmpl = profileEmpl::find($userId);
 
-        return view('profileSales.index', compact('profileSales'));
+        //Capturo el Numero del Empleado Logueado
+        $numEmpl = $profileEmpl->numero_empleado;
+        //Para Luego consultar en la tabla que empleados estan dentro de la supervision
+        $profileSales = \DB::table('profile_empl')->where( \DB::raw('jefe'), '=', $numEmpl)->get();
+        $sumVentas = \DB::table('profile_empl')->where( \DB::raw('jefe'), '=', $numEmpl)->sum('ventas2019');
+        //Capturo el Numero del Empleado Jefe
+        $numJefe = $profileEmpl->jefe;
+        //Para Luego consultar en la tabla que empleados estan dentro de la supervision
+        $profileJefe = \DB::table('profile_empl')->where( \DB::raw('numero_empleado'), '=', $numJefe)->get();
+        //dd($sumVentas);
+        return view('profileSales.index', compact('profileEmpl','profileSales','profileJefe','sumVentas'));
     }
 
     /**
@@ -49,10 +62,12 @@ class profileSalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+     public function show($id)
+     {
+         $profileEmpl = profileEmpl::find($id);
+
+         return view('profileSales.show', compact('profileEmpl'));
+     }
 
     /**
      * Show the form for editing the specified resource.

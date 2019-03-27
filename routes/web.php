@@ -98,4 +98,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('profileSales', 'profileSalesController@index')->name('profileSales.index')
     ->middleware('permission:profileSales.index');
 
+  Route::get('profileSales/{role}', 'profileSalesController@show')->name('profileSales.show')
+    ->middleware('permission:profileSales.show');
+      
 });
